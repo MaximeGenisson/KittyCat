@@ -26,7 +26,8 @@ public class CatManager : MonoBehaviour
     public ECatStateType catFeeling = ECatStateType.Neutral;
     [SerializeField] public int catScore = 10;
     public EPetPreference petPreference;
-    public float petFrequency = 0.5f;
+    public float monoPetFrequency = 0.5f;
+    public float holdPetFrequency = 10f;
 
     // Start is called before the first frame update
     void Start()

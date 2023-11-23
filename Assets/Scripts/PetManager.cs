@@ -8,42 +8,71 @@ public class PetManager : MonoBehaviour
     [SerializeField] private int goodBehaviourPoint = 1;
     [SerializeField] private int badBehaviourPoint = -1;
     private CatManager cat = new CatManager{petPreference = EPetPreference.MonoPet};
-    private float timer;
+    private float timerHold;
+    private float timerMono;
+    private float holdingTime;
+
+    public enum EPlayerPetting
+    {
+    isNotPetting,
+    isHoldPetting,
+    isMonoPetting
+    }
+    private EPlayerPetting petRecieved = EPlayerPetting.isNotPetting;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        timerMono = cat.monoPetFrequency;
+        timerHold = 0;
+        holdingTime = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (cat.petPreference = EPetPreference.MonoPet){
-            timer -= Time.DeltaTime;
+        timerMono -= Time.deltaTime;
+        if(Player.isPetting){
+            timerHold += Time.deltaTime;
+        
+            petRecieved = PlayerPettingState();
+            if(petRecieved == EPlayerPetting.isMonoPetting){
+                Debug.Log("entering mono");
+                Player.isPetting = false;
+                CatFeeling();
+            }
+             else if(petRecieved == EPlayerPetting.isHoldPetting){
+                holdingTime += Time.deltaTime;
+                 Debug.Log("entering hold");
+                if(holdingTime >= 2.0){
+                    holdingTime = 0;
+                    CatFeeling();
+                } 
+            }
         }
-        if (cat.petPreference = EPetPreference.HoldPet){
-            
+        else{
+            timerHold = 0;
         }
+        
     }
 
-    public static bool GoodPetting(){
-        if(cat.petPreference = EPetPreference.MonoPet){
-            if(timer<=0){
-                timer = cat.petFrequency; 
+    public bool GoodPetting(){
+        if(cat.petPreference == EPetPreference.MonoPet){
+            if(timerMono<=0){
+                timerMono = cat.monoPetFrequency; 
                 return true;
             }
             else{
-                timer = cat.petFrequency; 
+                timerMono = cat.monoPetFrequency; 
                 return false;
             }
         }
-        if(cat.petPreference = EPetPreference.HoldPet){
-            if(timer<=0){ 
-                return false;
+        else{
+            if(timerHold<= cat.holdPetFrequency){ 
+                return true;
             }
             else{
-                return true;
+                return false;
             }
         }
     }
@@ -56,10 +85,19 @@ public class PetManager : MonoBehaviour
             cat.catScore += badBehaviourPoint;
         }
         cat.CheckCatState();
+        Debug.Log(cat.catScore);
     }
 
-    void InitialiseCat(){
-        timer = cat.petFrequency;
+    public static EPlayerPetting PlayerPettingState(){
+    if(!Player.isMono && Player.isPetting){
+        return EPlayerPetting.isHoldPetting;
+    }
+    else if(Player.isMono && Player.isPetting){
+        return EPlayerPetting.isMonoPetting;
+    }
+        else{
+        return EPlayerPetting.isNotPetting;
+    }
     }
 
 

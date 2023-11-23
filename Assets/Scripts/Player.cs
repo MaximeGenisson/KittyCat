@@ -13,15 +13,24 @@ public class Player : MonoBehaviour
 
     private int destPoint;
 
+    public static float pettingTimmer;
+    public static bool isPetting = false;
+    public static bool isMono;
+
+    private bool action = false;
+
+
     private void Start()
     {
         target = waypoints[0];
     }
 
     private void Update()
-    {
-        if (Input.GetKey(KeyCode.Space))
+    {   
+        CheckButton();
+        if (action)
         {
+            isPetting = true;
             if (transform.position == initial.position)
             {
                 transform.position = waypoints[0].position;
@@ -30,16 +39,38 @@ public class Player : MonoBehaviour
             {
               Move();
             }
+            pettingTimmer += Time.deltaTime;
+            
 
         }
         else
         {
-            
+                SetPetStatus();
                 transform.position = initial.position;
                 target = waypoints[0];
+                pettingTimmer = 0;
+                isPetting = false;
             
         }
 
+    }
+
+    void CheckButton(){
+        if (Input.GetKeyDown(KeyCode.Space)){
+            action = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.Space)){
+            action = false;
+        }
+    }
+
+    void SetPetStatus(){
+        if(Player.pettingTimmer >= 0.3){
+            isMono=false;
+        }
+        else{
+            isMono = true;
+        }
     }
 
     private void Move()
@@ -58,6 +89,6 @@ public class Player : MonoBehaviour
         
      
     }
-
 }
+
 
