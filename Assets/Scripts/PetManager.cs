@@ -5,11 +5,11 @@ using UnityEngine;
 public class PetManager : MonoBehaviour
 {
 
-    [SerializeField] private int goodBehaviourPoint = 1;
-    [SerializeField] private int badBehaviourPoint = -1;
-    private CatManager cat = new CatManager{petPreference = EPetPreference.MonoPet};
-    private float timerHold;
-    private float timerMono;
+    [SerializeField] private static int goodBehaviourPoint = 1;
+    [SerializeField] private static int badBehaviourPoint = -1;
+    private static CatManager cat = new CatManager{petPreference = EPetPreference.MonoPet};
+    private static float timerHold;
+    private static float timerMono;
     private float holdingTime;
 
     public enum EPlayerPetting
@@ -18,7 +18,7 @@ public class PetManager : MonoBehaviour
     isHoldPetting,
     isMonoPetting
     }
-    private EPlayerPetting petRecieved = EPlayerPetting.isNotPetting;
+    private static EPlayerPetting petRecieved;
 
     // Start is called before the first frame update
     void Start()
@@ -34,17 +34,11 @@ public class PetManager : MonoBehaviour
         timerMono -= Time.deltaTime;
         if(Player.isPetting){
             timerHold += Time.deltaTime;
-        
             petRecieved = PlayerPettingState();
-            if(petRecieved == EPlayerPetting.isMonoPetting){
-                Debug.Log("entering mono");
-                Player.isPetting = false;
-                CatFeeling();
-            }
-             else if(petRecieved == EPlayerPetting.isHoldPetting){
+            if(petRecieved == EPlayerPetting.isHoldPetting){
                 holdingTime += Time.deltaTime;
-                 Debug.Log("entering hold");
-                if(holdingTime >= 2.0){
+                if(holdingTime >= 1.0){
+                    Debug.Log("entering one hold");
                     holdingTime = 0;
                     CatFeeling();
                 } 
@@ -56,20 +50,30 @@ public class PetManager : MonoBehaviour
         
     }
 
-    public bool GoodPetting(){
-        if(cat.petPreference == EPetPreference.MonoPet){
-            if(timerMono<=0){
-                timerMono = cat.monoPetFrequency; 
-                return true;
+    public static bool GoodPetting(){
+        if(petRecieved == EPlayerPetting.isMonoPetting){
+            if(cat.petPreference == EPetPreference.MonoPet){
+                if(timerMono<=0){
+                    timerMono = cat.monoPetFrequency; 
+                    return true;
+                }
+                else{
+                    timerMono = cat.monoPetFrequency; 
+                    return false;
+                }
             }
             else{
-                timerMono = cat.monoPetFrequency; 
                 return false;
             }
         }
         else{
-            if(timerHold<= cat.holdPetFrequency){ 
-                return true;
+            if(cat.petPreference == EPetPreference.HoldPet){
+                if(timerHold<= cat.holdPetFrequency){ 
+                    return true;
+                }
+                else{
+                    return false;
+                }
             }
             else{
                 return false;
@@ -77,7 +81,7 @@ public class PetManager : MonoBehaviour
         }
     }
 
-    void CatFeeling(){
+    public static void CatFeeling(){
         if(GoodPetting()){
             cat.catScore += goodBehaviourPoint;
         }
@@ -95,7 +99,7 @@ public class PetManager : MonoBehaviour
     else if(Player.isMono && Player.isPetting){
         return EPlayerPetting.isMonoPetting;
     }
-        else{
+    else{
         return EPlayerPetting.isNotPetting;
     }
     }
