@@ -65,11 +65,13 @@ public class Player : MonoBehaviour
     }
 
     void SetPetStatus(){
-        if(Player.pettingTimmer >= 0.3){
+        if(Player.pettingTimmer >= 0.5f){
             isMono=false;
         }
-        else{
+        else if(Player.pettingTimmer !=0){
             isMono = true;
+            Debug.Log("isMono");
+            PetManager.CatFeeling();
         }
     }
 
