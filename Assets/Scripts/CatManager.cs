@@ -23,7 +23,7 @@ public enum EPetPreference
 public class CatManager : MonoBehaviour
 {
 
-    public ECatStateType catFeeling = ECatStateType.Neutral;
+    public static ECatStateType catFeeling = ECatStateType.Neutral;
     [SerializeField] public int catScore = 10;
     public EPetPreference petPreference;
     public float monoPetFrequency = 0.5f;
@@ -38,7 +38,7 @@ public class CatManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        CheckCatState();
     }
 
     public void CheckCatState(){
