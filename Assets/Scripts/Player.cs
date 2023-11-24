@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     public static float pettingTimmer;
     public static bool isPetting = false;
     public static bool isMono;
+    public static float unactiveTime;
+    public static bool isUnactive;
 
     private bool action = false;
 
@@ -29,7 +31,9 @@ public class Player : MonoBehaviour
     {   
         CheckButton();
         if (action)
-        {
+        {   
+            isUnactive = false;
+            unactiveTime = 0;
             isPetting = true;
             if (transform.position == initial.position)
             {
@@ -44,7 +48,8 @@ public class Player : MonoBehaviour
 
         }
         else
-        {
+        {       
+
                 SetPetStatus();
                 transform.position = initial.position;
                 target = waypoints[0];
@@ -72,6 +77,10 @@ public class Player : MonoBehaviour
             isMono = true;
             Debug.Log("isMono");
             PetManager.CatFeeling();
+        }
+        else if (Player.pettingTimmer == 0){
+            isUnactive = true;
+            unactiveTime += Time.deltaTime;
         }
     }
 

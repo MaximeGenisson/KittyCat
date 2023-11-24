@@ -50,40 +50,54 @@ public class PetManager : MonoBehaviour
             }
         }
         else{
+            CalmCat();
             timerHold = 0;
         }
         CheckCatMood();
+        cat.CheckCatState();
         
     }
 
     public static bool GoodPetting(){
-        if(petRecieved == EPlayerPetting.isMonoPetting){
-            if(cat.petPreference == EPetPreference.MonoPet){
-                if(timerMono<=0){
-                    timerMono = cat.monoPetFrequency; 
-                    return true;
+        if(cat.catScore >= 10){
+            if(petRecieved == EPlayerPetting.isMonoPetting){
+                if(cat.petPreference == EPetPreference.MonoPet){
+                    if(timerMono<=0){
+                        timerMono = cat.monoPetFrequency; 
+                        return true;
+                    }
+                    else{
+                        timerMono = cat.monoPetFrequency; 
+                        return false;
+                    }
                 }
                 else{
-                    timerMono = cat.monoPetFrequency; 
                     return false;
                 }
             }
             else{
-                return false;
+                if(cat.petPreference == EPetPreference.HoldPet){
+                    if(timerHold<= cat.holdPetFrequency){ 
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                else{
+                    return false;
+                }
             }
         }
         else{
-            if(cat.petPreference == EPetPreference.HoldPet){
-                if(timerHold<= cat.holdPetFrequency){ 
-                    return true;
-                }
-                else{
-                    return false;
-                }
-            }
-            else{
-                return false;
-            }
+            return false;
+        }
+    }
+
+    private void CalmCat(){
+        if(cat.catScore < 10 && Player.unactiveTime >= 2.0f){
+            cat.catScore += goodBehaviourPoint;
+            Player.unactiveTime = 0;
         }
     }
 
