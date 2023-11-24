@@ -7,10 +7,11 @@ public class ChangeBody : MonoBehaviour
 
     public SpriteRenderer spriteRenderer;
     public Sprite[] spriteArray;
+    private CatManager kitty;
 
     void ChangeSprite()
     {
-        if (CatManager.catFeeling == ECatStateType.VeryAngry)
+        if (PetManager.cat.catFeeling == ECatStateType.VeryAngry)
         {
             spriteRenderer.sprite = spriteArray[0];
         }
@@ -23,7 +24,7 @@ public class ChangeBody : MonoBehaviour
     }
     // Start is called before the first frame update
     void Start()
-    {
+    {   
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
