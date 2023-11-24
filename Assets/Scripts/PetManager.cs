@@ -7,7 +7,7 @@ public class PetManager : MonoBehaviour
 
     [SerializeField] private static int goodBehaviourPoint = 1;
     [SerializeField] private static int badBehaviourPoint = -1;
-    private static CatManager cat = new CatManager{petPreference = EPetPreference.MonoPet};
+    public static CatManager cat = new CatManager{petPreference = EPetPreference.MonoPet};
     private static float timerHold;
     private static float timerMono;
     private float holdingTime;
@@ -90,6 +90,7 @@ public class PetManager : MonoBehaviour
         }
         cat.CheckCatState();
         Debug.Log(cat.catScore);
+        Debug.Log(cat.catFeeling);
     }
 
     public static EPlayerPetting PlayerPettingState(){

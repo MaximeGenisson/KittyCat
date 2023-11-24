@@ -10,26 +10,26 @@ public class ChangeTail : MonoBehaviour
 
     void ChangeSprite()
     {
-        if (CatManager.catFeeling == ECatStateType.VeryAngry)
+        if (PetManager.cat.catFeeling == ECatStateType.VeryAngry)
         {
             spriteRenderer.sprite = spriteArray[0];
         }
-        else if (CatManager.catFeeling == ECatStateType.Angry)
+        else if (PetManager.cat.catFeeling == ECatStateType.Angry)
         {
             spriteRenderer.sprite = spriteArray[1];
         }
 
-        else if (CatManager.catFeeling == ECatStateType.Neutral)
+        else if (PetManager.cat.catFeeling == ECatStateType.Neutral)
         {
             spriteRenderer.sprite = spriteArray[1];
         }
 
-        else if (CatManager.catFeeling == ECatStateType.Happy)
+        else if (PetManager.cat.catFeeling == ECatStateType.Happy)
         {
             spriteRenderer.sprite = spriteArray[2];
         }
 
-        else if (CatManager.catFeeling == ECatStateType.RonronStart)
+        else if (PetManager.cat.catFeeling == ECatStateType.RonronStart)
         {
             spriteRenderer.sprite = spriteArray[2];
         }
