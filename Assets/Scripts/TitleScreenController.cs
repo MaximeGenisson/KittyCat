@@ -3,57 +3,64 @@ using UnityEngine.SceneManagement;
 
 public class TitleScreenController : MonoBehaviour
 {
-    public string SceneAudrey;
     public float holdDuration = 2f; // Adjust the hold duration as needed
 
-    private bool isSpaceBarHeld = false;
-    private float spaceBarHoldStartTime;
+    private bool actionCommand;
+    private float clickTimmer;
+    private bool isMonoClick;
+    private bool isHoldClick;
 
     private void Update()
     {
-        // Check for space bar press
-        if (Input.GetKeyDown(KeyCode.Space))
+
+        CheckButton();
+       
+        if (actionCommand)
         {
-            // Record the time when the space bar is pressed
-            spaceBarHoldStartTime = Time.time;
-            isSpaceBarHeld = false;
+            clickTimmer += Time.deltaTime;
         }
-
-        // Check for space bar release
-        if (Input.GetKeyUp(KeyCode.Space))
+        else
         {
-            // Calculate the duration the space bar was held
-            float holdDuration = Time.time - spaceBarHoldStartTime;
-
-            // If held for a short duration, call PlayGame
-            if (!isSpaceBarHeld && holdDuration < 0.5f)
-            {
-                PlayGame();
-            }
-
-            isSpaceBarHeld = false;
+                SetClickStatus();
+                clickTimmer = 0;
+        }
+        if (isMonoClick){
+            PlayGame();
         }
 
         // Check for space bar hold
-        if (Input.GetKey(KeyCode.Space))
-        {
-            // If space bar is held for the specified duration, call QuitGame
-            if (Time.time - spaceBarHoldStartTime > holdDuration)
-            {
-                QuitGame();
-                isSpaceBarHeld = true;
-            }
+        if(isHoldClick){
+            QuitGame();
         }
     }
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(SceneAudrey);
+        SceneManager.LoadScene("CompleteScene");
     }
 
     public void QuitGame()
     {
         Debug.Log("Quitting game...");
         Application.Quit();
+    }
+
+
+    private void CheckButton(){
+        if (Input.GetKeyDown(KeyCode.Space)){
+            actionCommand = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.Space)){
+            actionCommand = false;
+        }
+    }
+
+    private void SetClickStatus(){
+        if(clickTimmer >= holdDuration){
+            isHoldClick=true;
+        }
+        else if(clickTimmer !=0){
+            isMonoClick = true;
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PetManager : MonoBehaviour
 {
@@ -136,7 +137,7 @@ public class PetManager : MonoBehaviour
     }
 
     private void TriggerGameOver(){
-
+        SceneManager.LoadScene("SceneFail");
     }
 
     private void TriggerWin(){
