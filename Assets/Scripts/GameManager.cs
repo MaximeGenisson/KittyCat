@@ -5,23 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public string sceneName;
+
     void ChangeScene()
     {
-        if (CatManager.catFeeling == ECatStateType.TooMuchAngry)
+        if (PetManager.cat.catFeeling == ECatStateType.TooMuchAngry)
         {
-            SceneManager.LoadScene("SceneFail");
+            SceneManager.LoadScene(sceneName);
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

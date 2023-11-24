@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16cafd4bf53b13b4598c61df21073f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  catFeeling: 3
   catScore: 15
   petPreference: 0
   monoPetFrequency: 0.5
