@@ -7,10 +7,12 @@ public class PetManager : MonoBehaviour
 
     [SerializeField] private static int goodBehaviourPoint = 1;
     [SerializeField] private static int badBehaviourPoint = -1;
-    public static CatManager cat = new CatManager{petPreference = EPetPreference.MonoPet};
+    public static CatManager cat;
     private static float timerHold;
     private static float timerMono;
     private float holdingTime;
+
+    private List<CatManager> cats = new List<CatManager>();
 
     public enum EPlayerPetting
     {
@@ -23,6 +25,8 @@ public class PetManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        InitializeCats();
+        cat = cats[0];
         timerMono = cat.monoPetFrequency;
         timerHold = 0;
         holdingTime = 0;
@@ -47,6 +51,7 @@ public class PetManager : MonoBehaviour
         else{
             timerHold = 0;
         }
+        CheckCatMood();
         
     }
 
@@ -104,6 +109,41 @@ public class PetManager : MonoBehaviour
         return EPlayerPetting.isNotPetting;
     }
     }
+
+    private void InitializeCats(){
+        cats.Add(new CatManager() {monoPetFrequency = 0.5f, petPreference = EPetPreference.MonoPet, catIndex = 1});
+        cats.Add(new CatManager() {holdPetFrequency = 5f, petPreference = EPetPreference.HoldPet, catIndex = 2});
+    }
+
+
+    private void CheckCatMood(){
+        if(cat.catScore == 20){
+            Debug.Log("changing cat");
+            changeCat();
+        }
+        if(cat.catScore == 0){
+            TriggerGameOver();
+        }
+    }
+
+    private void changeCat(){
+        if(cat.catIndex == cats.Count){
+            TriggerWin();
+        }
+        else{
+            cat = cats[cat.catIndex];
+        }
+    }
+
+    private void TriggerGameOver(){
+
+    }
+
+    private void TriggerWin(){
+
+    }
+
+
 
 
 }

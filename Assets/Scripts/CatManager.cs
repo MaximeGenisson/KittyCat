@@ -20,6 +20,7 @@ public enum EPetPreference
     MonoPet
 }
 
+
 public class CatManager : MonoBehaviour
 {
 
@@ -28,6 +29,8 @@ public class CatManager : MonoBehaviour
     public EPetPreference petPreference;
     public float monoPetFrequency = 0.5f;
     public float holdPetFrequency = 10f;
+
+    public int catIndex;
 
     // Start is called before the first frame update
     void Start()
