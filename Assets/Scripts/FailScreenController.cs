@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TitleScreenController : MonoBehaviour
+public class FailScreenController : MonoBehaviour
 {
     public float holdDuration = 2f; // Adjust the hold duration as needed
 
@@ -28,21 +28,11 @@ public class TitleScreenController : MonoBehaviour
             PlayGame();
         }
 
-        // Check for space bar hold
-        if(isHoldClick){
-            QuitGame();
-        }
     }
 
     private void PlayGame()
     {
-        SceneManager.LoadScene("ExplainScene");
-    }
-
-    public void QuitGame()
-    {
-        Debug.Log("Quitting game...");
-        Application.Quit();
+        SceneManager.LoadScene("TitleScene");
     }
 
 
