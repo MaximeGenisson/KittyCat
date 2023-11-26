@@ -290,7 +290,6 @@ MonoBehaviour:
   petPreference: 0
   monoPetFrequency: 0.5
   holdPetFrequency: 10
-  catIndex: 0
 --- !u!114 &725374315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1502,5 +1501,3 @@ SceneRoots:
   - {fileID: 1189016656}
   - {fileID: 725374313}
   - {fileID: 1848123042}
-  - {fileID: 936997958}
-  - {fileID: 2130063786}
