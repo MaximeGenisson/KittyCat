@@ -59,7 +59,7 @@ public class PetManager : MonoBehaviour
     }
 
     public static bool GoodPetting(){
-        if(cat.catScore >= 10){
+        if(cat.catScore >= 9){
             if(petRecieved == EPlayerPetting.isMonoPetting){
                 if(cat.petPreference == EPetPreference.MonoPet){
                     if(timerMono<=0){
