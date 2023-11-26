@@ -32,11 +32,10 @@ public class CatManager : MonoBehaviour
 
     public int catIndex;
 
-
     // Start is called before the first frame update
     void Start()
     {
-    
+        
     }
 
     // Update is called once per frame
