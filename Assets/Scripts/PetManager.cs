@@ -36,6 +36,9 @@ public class PetManager : MonoBehaviour
         timerMono = cat.monoPetFrequency;
         timerHold = 0;
         holdingTime = 0;
+        catParts = FindObjectsOfType<CatParts>(true);
+        changeCatParts = FindObjectsOfType<ChangeCatParts>(true);
+        newCatParts = FindObjectsOfType<NewCatParts>(true);
     }
 
     // Update is called once per frame
