@@ -136,6 +136,8 @@ public class PetManager : MonoBehaviour
     private void InitializeCats(){
         cats.Add(new CatManager() {monoPetFrequency = 0.5f, petPreference = EPetPreference.MonoPet, catIndex = 1});
         cats.Add(new CatManager() {holdPetFrequency = 5f, petPreference = EPetPreference.HoldPet, catIndex = 2});
+        cats.Add(new CatManager() {holdPetFrequency = 3f, petPreference = EPetPreference.HoldPet, catIndex = 3});
+        cats.Add(new CatManager() {holdPetFrequency = 1f, petPreference = EPetPreference.MonoPet, catIndex = 4});
     }
 
 
@@ -164,7 +166,7 @@ public class PetManager : MonoBehaviour
     }
 
     private void TriggerWin(){
-
+        SceneManager.LoadScene("SceneVictory");
     }
 
     IEnumerator Waiter(){
