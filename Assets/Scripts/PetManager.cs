@@ -12,7 +12,6 @@ public class PetManager : MonoBehaviour
     private static float timerHold;
     private static float timerMono;
     private float holdingTime;
-    private float waitTimmerTransition = 0;
 
     private List<CatManager> cats = new List<CatManager>();
 
@@ -24,10 +23,6 @@ public class PetManager : MonoBehaviour
     }
     private static EPlayerPetting petRecieved;
 
-    CatParts [] catParts;
-    ChangeCatParts [] changeCatParts;
-    NewCatParts [] newCatParts;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -36,14 +31,14 @@ public class PetManager : MonoBehaviour
         timerMono = cat.monoPetFrequency;
         timerHold = 0;
         holdingTime = 0;
-        catParts = FindObjectsOfType<CatParts>(true);
-        changeCatParts = FindObjectsOfType<ChangeCatParts>(true);
-        newCatParts = FindObjectsOfType<NewCatParts>(true);
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+
         timerMono -= Time.deltaTime;
         if(Player.isPetting){
             timerHold += Time.deltaTime;
@@ -67,7 +62,7 @@ public class PetManager : MonoBehaviour
     }
 
     public static bool GoodPetting(){
-        if(cat.catScore >= 9){
+        if(cat.catScore >= 10){
             if(petRecieved == EPlayerPetting.isMonoPetting){
                 if(cat.petPreference == EPetPreference.MonoPet){
                     if(timerMono<=0){
@@ -136,14 +131,14 @@ public class PetManager : MonoBehaviour
     private void InitializeCats(){
         cats.Add(new CatManager() {monoPetFrequency = 0.5f, petPreference = EPetPreference.MonoPet, catIndex = 1});
         cats.Add(new CatManager() {holdPetFrequency = 5f, petPreference = EPetPreference.HoldPet, catIndex = 2});
-        cats.Add(new CatManager() {holdPetFrequency = 3f, petPreference = EPetPreference.HoldPet, catIndex = 3});
-        cats.Add(new CatManager() {holdPetFrequency = 1f, petPreference = EPetPreference.MonoPet, catIndex = 4});
     }
 
+    
 
     private void CheckCatMood(){
         if(cat.catScore == 20){
             Debug.Log("changing cat");
+
             changeCat();
         }
         if(cat.catScore == 0){
@@ -153,11 +148,11 @@ public class PetManager : MonoBehaviour
 
     private void changeCat(){
         if(cat.catIndex == cats.Count){
+
             TriggerWin();
         }
-        else{
+        else{         
             cat = cats[cat.catIndex];
-            StartCoroutine(Waiter());
         }
     }
 
@@ -166,30 +161,7 @@ public class PetManager : MonoBehaviour
     }
 
     private void TriggerWin(){
-        SceneManager.LoadScene("SceneVictory");
-    }
 
-    IEnumerator Waiter(){
-         foreach(CatParts parts in catParts){
-                parts.gameObject.SetActive(false);
-            }
-            foreach(ChangeCatParts parts in changeCatParts){
-                parts.gameObject.SetActive(true);
-            }
-            yield return new WaitForSeconds(3);
-            foreach(ChangeCatParts parts in changeCatParts){
-                parts.gameObject.SetActive(false);
-            }
-            foreach(NewCatParts parts in newCatParts){
-                parts.gameObject.SetActive(true);
-            }
-            yield return new WaitForSeconds(3);
-            foreach(NewCatParts parts in newCatParts){
-                parts.gameObject.SetActive(false);
-            }
-            foreach(CatParts parts in catParts){
-                parts.gameObject.SetActive(true);
-            }
     }
 
 
