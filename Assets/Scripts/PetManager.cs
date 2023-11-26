@@ -31,11 +31,14 @@ public class PetManager : MonoBehaviour
         timerMono = cat.monoPetFrequency;
         timerHold = 0;
         holdingTime = 0;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+
         timerMono -= Time.deltaTime;
         if(Player.isPetting){
             timerHold += Time.deltaTime;
@@ -130,10 +133,12 @@ public class PetManager : MonoBehaviour
         cats.Add(new CatManager() {holdPetFrequency = 5f, petPreference = EPetPreference.HoldPet, catIndex = 2});
     }
 
+    
 
     private void CheckCatMood(){
         if(cat.catScore == 20){
             Debug.Log("changing cat");
+
             changeCat();
         }
         if(cat.catScore == 0){
@@ -143,9 +148,10 @@ public class PetManager : MonoBehaviour
 
     private void changeCat(){
         if(cat.catIndex == cats.Count){
+
             TriggerWin();
         }
-        else{
+        else{         
             cat = cats[cat.catIndex];
         }
     }

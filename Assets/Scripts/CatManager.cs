@@ -11,7 +11,8 @@ public enum ECatStateType
     Happy,
     RonronStart,
     RonronSucess,
-    NoCat
+    NoCat,
+    RonronSucces
 }
 
 public enum EPetPreference
@@ -32,9 +33,12 @@ public class CatManager : MonoBehaviour
 
     public int catIndex;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
+
         
     }
 
@@ -42,6 +46,7 @@ public class CatManager : MonoBehaviour
     void Update()
     {
         CheckCatState();
+
     }
 
     public void CheckCatState(){
