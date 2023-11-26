@@ -12,6 +12,7 @@ public class PetManager : MonoBehaviour
     private static float timerHold;
     private static float timerMono;
     private float holdingTime;
+    private float waitTimmerTransition = 0;
 
     private List<CatManager> cats = new List<CatManager>();
 
@@ -23,6 +24,10 @@ public class PetManager : MonoBehaviour
     }
     private static EPlayerPetting petRecieved;
 
+    CatParts [] catParts;
+    ChangeCatParts [] changeCatParts;
+    NewCatParts [] newCatParts;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +36,9 @@ public class PetManager : MonoBehaviour
         timerMono = cat.monoPetFrequency;
         timerHold = 0;
         holdingTime = 0;
+        catParts = FindObjectsOfType<CatParts>(true);
+        changeCatParts = FindObjectsOfType<ChangeCatParts>(true);
+        newCatParts = FindObjectsOfType<NewCatParts>(true);
     }
 
     // Update is called once per frame
@@ -147,6 +155,7 @@ public class PetManager : MonoBehaviour
         }
         else{
             cat = cats[cat.catIndex];
+            StartCoroutine(Waiter());
         }
     }
 
@@ -156,6 +165,29 @@ public class PetManager : MonoBehaviour
 
     private void TriggerWin(){
 
+    }
+
+    IEnumerator Waiter(){
+         foreach(CatParts parts in catParts){
+                parts.gameObject.SetActive(false);
+            }
+            foreach(ChangeCatParts parts in changeCatParts){
+                parts.gameObject.SetActive(true);
+            }
+            yield return new WaitForSeconds(3);
+            foreach(ChangeCatParts parts in changeCatParts){
+                parts.gameObject.SetActive(false);
+            }
+            foreach(NewCatParts parts in newCatParts){
+                parts.gameObject.SetActive(true);
+            }
+            yield return new WaitForSeconds(3);
+            foreach(NewCatParts parts in newCatParts){
+                parts.gameObject.SetActive(false);
+            }
+            foreach(CatParts parts in catParts){
+                parts.gameObject.SetActive(true);
+            }
     }
 
 
