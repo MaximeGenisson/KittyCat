@@ -34,9 +34,9 @@ public class TitleScreenController : MonoBehaviour
         }
     }
 
-    private void PlayGame()
+    public void PlayGame()
     {
-        SceneManager.LoadScene("ExplainScene");
+        SceneManager.LoadScene("CompleteScene");
     }
 
     public void QuitGame()
